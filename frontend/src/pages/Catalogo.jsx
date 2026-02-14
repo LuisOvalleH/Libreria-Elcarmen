@@ -91,6 +91,17 @@ export default function Catalogo() {
     "Hola, me interesa conocer su catálogo y disponibilidad de productos.";
   const defaultWspLink = buildWhatsAppLink(phone, defaultMessage);
 
+  const resolveImageUrl = (raw) => {
+    if (!raw) return "";
+    const value = String(raw);
+    if (value.startsWith("http://") && window.location.protocol === "https:") {
+      return value.replace("http://", "https://");
+    }
+    if (value.startsWith("http://") || value.startsWith("https://")) return value;
+    const normalized = value.startsWith("/") ? value : `/${value}`;
+    return `${apiBase}${normalized}`;
+  };
+
   return (
     <div className="catalogo-page">
       <div className="container">
@@ -182,11 +193,7 @@ export default function Catalogo() {
           {filtrados.map((p) => {
             const rawImg = p?.imagen || "";
             const hasImage = Boolean(rawImg);
-            const img = hasImage
-              ? rawImg?.startsWith("http")
-                ? rawImg
-                : `${apiBase}${rawImg}`
-              : "";
+            const img = hasImage ? resolveImageUrl(rawImg) : "";
 
             // Mensaje WhatsApp (más pro: trae nombre/categoría)
             const catalogLink =

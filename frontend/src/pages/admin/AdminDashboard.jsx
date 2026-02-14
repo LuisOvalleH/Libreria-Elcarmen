@@ -73,7 +73,11 @@ export default function AdminDashboard() {
   const resolveImageUrl = useCallback(
     (raw) => {
       if (!raw) return "";
-      if (String(raw).startsWith("http")) return raw;
+      const value = String(raw);
+      if (value.startsWith("http://") && window.location.protocol === "https:") {
+        return value.replace("http://", "https://");
+      }
+      if (value.startsWith("http://") || value.startsWith("https://")) return value;
       const normalized = String(raw).startsWith("/") ? raw : `/${raw}`;
       return `${apiBase}${normalized}`;
     },
