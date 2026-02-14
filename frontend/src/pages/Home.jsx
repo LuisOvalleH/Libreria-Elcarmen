@@ -1,4 +1,5 @@
 import AnimatedSection from "../components/ui/AnimatedSection";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const stats = [
@@ -48,12 +49,12 @@ export default function Home() {
                   flexWrap: "wrap",
                 }}
               >
-                <a className="btn-primary" href="/catalogo">
+                <Link className="btn-primary" to="/catalogo">
                   Explorar Catálogo →
-                </a>
+                </Link>
 
-                <a
-                  href="/contacto"
+                <Link
+                  to="/contacto"
                   style={{
                     fontWeight: 900,
                     color: "#0f172a",
@@ -65,7 +66,7 @@ export default function Home() {
                   }}
                 >
                   Ver ubicación
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -477,8 +478,8 @@ export default function Home() {
 
           <AnimatedSection delay={0.15}>
             <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
-              <a
-                href="/contacto"
+              <Link
+                to="/contacto"
                 style={{
                   background: "white",
                   color: "#f59e0b",
@@ -490,7 +491,7 @@ export default function Home() {
                 }}
               >
                 Visítanos Hoy →
-              </a>
+              </Link>
             </div>
           </AnimatedSection>
         </div>

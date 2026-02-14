@@ -13,6 +13,8 @@ const navItems = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const whatsappPhone = import.meta.env.VITE_WHATSAPP_PHONE || "50246496454";
+  const whatsappHref = `https://wa.me/${whatsappPhone}`;
 
   // Bloquear scroll cuando el menú móvil está abierto
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function Navbar() {
           {/* WhatsApp: poné el número real en formato 502XXXXXXXX */}
           <a
             className="btn-cta"
-            href="https://wa.me/50246496454"
+            href={whatsappHref}
             target="_blank"
             rel="noreferrer"
             aria-label="Abrir WhatsApp"
@@ -119,7 +121,7 @@ export default function Navbar() {
         <div className="drawer__cta">
           <a
             className="btn-cta w-full"
-            href="https://wa.me/50246496454"
+            href={whatsappHref}
             target="_blank"
             rel="noreferrer"
             onClick={() => setOpen(false)}

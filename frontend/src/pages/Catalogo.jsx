@@ -76,7 +76,8 @@ export default function Catalogo() {
     );
   }
 
-  const apiBase = import.meta?.env?.VITE_API_URL || "http://127.0.0.1:8000";
+  const apiBase = api.defaults.baseURL || "http://127.0.0.1:8000";
+  const phone = import.meta?.env?.VITE_WHATSAPP_PHONE || "50246496454";
 
   return (
     <div className="catalogo-page">
@@ -163,8 +164,6 @@ export default function Catalogo() {
               }\n\n¿Me das precio y disponibilidad?`
             );
 
-            // 👉 Cambia por tu número real (formato internacional)
-            const phone = "50200000000";
             const wspLink = `https://wa.me/${phone}?text=${msg}`;
 
             return (
