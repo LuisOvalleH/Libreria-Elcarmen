@@ -154,7 +154,15 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 CORS_ALLOWED_ORIGINS = [
     o.strip() for o in os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", "http://localhost:5174").split(",") if o.strip()
@@ -176,4 +184,6 @@ if USE_CLOUDINARY_MEDIA:
         "API_SECRET": os.getenv("CLOUDINARY_API_SECRET", ""),
         "SECURE": True,
     }
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    STORAGES["default"] = {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    }
