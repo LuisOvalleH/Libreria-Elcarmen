@@ -49,3 +49,17 @@ python manage.py createsuperuser
 ## Notas
 - Planes free pueden “dormir” servicios; primera carga puede tardar.
 - Sin dominio igual puedes compartir URLs temporales con clientes.
+- En Render free, los archivos subidos al disco local no son persistentes.
+
+## 6) Imagenes persistentes en plan free (Cloudinary)
+- Crea una cuenta gratis en Cloudinary y copia:
+  - `cloud_name`
+  - `api_key`
+  - `api_secret`
+- En Render -> Environment del backend agrega:
+  - `DJANGO_USE_CLOUDINARY_MEDIA=true`
+  - `CLOUDINARY_CLOUD_NAME=...`
+  - `CLOUDINARY_API_KEY=...`
+  - `CLOUDINARY_API_SECRET=...`
+- Guarda y redeploy.
+- Desde el admin vuelve a subir imagenes (las antiguas locales pueden estar perdidas).

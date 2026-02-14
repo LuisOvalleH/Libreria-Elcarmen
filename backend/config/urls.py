@@ -17,6 +17,6 @@ urlpatterns = [
     path("api/productos/", include("productos.urls")),
 ]
 
-# ✅ Servir media en este despliegue (Render/Vercel)
-# Nota: para alto tráfico conviene migrar a S3/Cloudinary.
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# ✅ Servir media local solo cuando no se usa Cloudinary
+if not getattr(settings, "USE_CLOUDINARY_MEDIA", False):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
