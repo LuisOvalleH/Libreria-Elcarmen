@@ -17,6 +17,6 @@ urlpatterns = [
     path("api/productos/", include("productos.urls")),
 ]
 
-# ✅ Para servir imágenes en desarrollo
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# ✅ Servir media en este despliegue (Render/Vercel)
+# Nota: para alto tráfico conviene migrar a S3/Cloudinary.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

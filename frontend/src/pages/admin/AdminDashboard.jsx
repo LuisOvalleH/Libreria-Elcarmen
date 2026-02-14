@@ -62,6 +62,7 @@ export default function AdminDashboard() {
   const [page, setPage] = useState(1);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const apiBase = api.defaults.baseURL || "https://libreria-elcarmen-api.onrender.com";
 
   const authConfig = useMemo(
     () => ({ headers: { Authorization: `Token ${token}` } }),
@@ -69,6 +70,15 @@ export default function AdminDashboard() {
   );
 
   const imagePreview = localImagePreview || prodForm.imagen_url || "";
+  const resolveImageUrl = useCallback(
+    (raw) => {
+      if (!raw) return "";
+      if (String(raw).startsWith("http")) return raw;
+      const normalized = String(raw).startsWith("/") ? raw : `/${raw}`;
+      return `${apiBase}${normalized}`;
+    },
+    [apiBase]
+  );
 
   const catNameMissing = !catForm.nombre.trim();
   const catSlugMissing = !catForm.slug.trim();
@@ -293,7 +303,7 @@ export default function AdminDashboard() {
       categoria_id: item.categoria?.id || "",
       activo: item.activo,
       imagen: null,
-      imagen_url: item.imagen || "",
+      imagen_url: resolveImageUrl(item.imagen),
     });
     setProdSlugTouched(true);
     setImageError("");
@@ -601,7 +611,14 @@ export default function AdminDashboard() {
                   <article key={item.id} className="admin-item">
                     <div className="admin-item-main">
                       {tab === "productos" && item.imagen ? (
-                        <img className="admin-thumb" src={item.imagen} alt={item.nombre} />
+                        <img
+                          className="admin-thumb"
+                          src={resolveImageUrl(item.imagen)}
+                          alt={item.nombre}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
                       ) : (
                         <div className="admin-thumb admin-thumb-fallback">{item.nombre?.[0] || "?"}</div>
                       )}
