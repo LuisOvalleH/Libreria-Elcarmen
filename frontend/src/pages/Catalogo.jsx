@@ -1,8 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
+import { buildWhatsAppLink } from "../utils/whatsapp";
+import useSeo from "../hooks/useSeo";
 import "../styles/catalogo.css";
 
 export default function Catalogo() {
+  useSeo({
+    title: "Catálogo",
+    description:
+      "Explora el catálogo de productos de librería y papelería. Filtra por categoría y consulta por WhatsApp.",
+  });
+
   const [categorias, setCategorias] = useState([]);
   const [productos, setProductos] = useState([]);
   const [q, setQ] = useState("");
@@ -78,6 +86,10 @@ export default function Catalogo() {
 
   const apiBase = api.defaults.baseURL || "http://127.0.0.1:8000";
   const phone = import.meta?.env?.VITE_WHATSAPP_PHONE || "50246496454";
+  const defaultMessage =
+    import.meta?.env?.VITE_WHATSAPP_DEFAULT_MESSAGE ||
+    "Hola, me interesa conocer su catálogo y disponibilidad de productos.";
+  const defaultWspLink = buildWhatsAppLink(phone, defaultMessage);
 
   return (
     <div className="catalogo-page">
@@ -94,6 +106,18 @@ export default function Catalogo() {
             <p className="catalogo-sub">
               Descubre productos educativos y profesionales. Busca por nombre o filtra por categoría.
             </p>
+
+            <div className="catalogo-cta-top">
+              <span>¿No encuentras lo que buscas?</span>
+              <a
+                className="catalogo-cta-link"
+                href={defaultWspLink}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Escríbenos por WhatsApp
+              </a>
+            </div>
 
             <div className="catalogo-panel">
               <div className="catalogo-row">
@@ -120,24 +144,26 @@ export default function Catalogo() {
 
               {/* Chips (más “tienda” que un select) */}
               <div className="catalogo-chips">
-                <div
+                <button
+                  type="button"
                   className={`chip ${cat === "todos" ? "active" : ""}`}
                   onClick={() => setCat("todos")}
-                  role="button"
+                  aria-pressed={cat === "todos"}
                 >
                   Todos <span className="chip-badge">{productos.length}</span>
-                </div>
+                </button>
 
                 {categorias.map((c) => (
-                  <div
+                  <button
+                    type="button"
                     key={c.id}
                     className={`chip ${cat === c.slug ? "active" : ""}`}
                     onClick={() => setCat(c.slug)}
-                    role="button"
+                    aria-pressed={cat === c.slug}
                   >
                     {c.nombre}{" "}
                     <span className="chip-badge">{countsBySlug.get(c.slug) || 0}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -155,27 +181,39 @@ export default function Catalogo() {
         <section className="catalogo-grid">
           {filtrados.map((p) => {
             const rawImg = p?.imagen || "";
-            const img = rawImg?.startsWith("http") ? rawImg : `${apiBase}${rawImg}`;
+            const hasImage = Boolean(rawImg);
+            const img = hasImage
+              ? rawImg?.startsWith("http")
+                ? rawImg
+                : `${apiBase}${rawImg}`
+              : "";
 
             // Mensaje WhatsApp (más pro: trae nombre/categoría)
-            const msg = encodeURIComponent(
-              `Hola 👋, me interesa este producto:\n\n• ${p?.nombre}\n• Categoría: ${
-                p?.categoria?.nombre || "Sin categoría"
-              }\n\n¿Me das precio y disponibilidad?`
-            );
-
-            const wspLink = `https://wa.me/${phone}?text=${msg}`;
+            const catalogLink =
+              typeof window !== "undefined" ? `${window.location.origin}/catalogo` : "/catalogo";
+            const msg = `Hola 👋, me interesa este producto:\n\n• ${p?.nombre}\n• Código: ${
+              p?.slug || "sin-codigo"
+            }\n• Categoría: ${
+              p?.categoria?.nombre || "Sin categoría"
+            }\n• Link: ${catalogLink}\n\n¿Me das precio y disponibilidad?`;
+            const wspLink = buildWhatsAppLink(phone, msg);
 
             return (
               <article key={p.id} className="pcard">
                 <div className="pmedia">
-                  <img
-                    src={img}
-                    alt={p?.nombre || "Producto"}
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
+                  {hasImage ? (
+                    <img
+                      src={img}
+                      alt={p?.nombre || "Producto"}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement?.classList.add("pmedia--empty");
+                      }}
+                    />
+                  ) : (
+                    <div className="pmedia-placeholder">Sin imagen disponible</div>
+                  )}
                   <div className="pbadge">DISPONIBLE</div>
                 </div>
 

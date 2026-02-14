@@ -1,10 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap");
+
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+html, body, #root { min-height: 100%; }
+:root {
+  --font-sans: "Manrope", "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-display: "Sora", "Gill Sans", "Trebuchet MS", sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(1000px 440px at 10% -10%, rgba(245, 158, 11, 0.16), transparent 55%),
+    radial-gradient(800px 340px at 98% 2%, rgba(59, 130, 246, 0.1), transparent 55%),
+    #f8fafc;
+  color: #0f172a;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .grid-hero {

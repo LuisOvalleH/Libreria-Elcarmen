@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc" />
+      <stop offset="1" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="brand" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ff6a13" />
+      <stop offset="1" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="150" cy="90" r="180" fill="#ff6a13" opacity=".15" />
+  <circle cx="1060" cy="540" r="220" fill="#1d4ed8" opacity=".08" />
+  <rect x="90" y="120" width="1020" height="390" rx="34" fill="#ffffff" stroke="#cbd5e1" />
+  <text x="150" y="245" font-family="Sora, Arial, sans-serif" font-size="70" font-weight="700" fill="#0f172a">
+    Librería El Carmen
+  </text>
+  <text x="150" y="315" font-family="Manrope, Arial, sans-serif" font-size="38" fill="url(#brand)" font-weight="700">
+    Catálogo y atención por WhatsApp
+  </text>
+  <text x="150" y="382" font-family="Manrope, Arial, sans-serif" font-size="28" fill="#475569">
+    Productos escolares, papelería y pedidos especiales.
+  </text>
+  <rect x="150" y="430" width="320" height="62" rx="31" fill="url(#brand)" />
+  <text x="190" y="470" font-family="Manrope, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">
+    Ver catálogo
+  </text>
+</svg>

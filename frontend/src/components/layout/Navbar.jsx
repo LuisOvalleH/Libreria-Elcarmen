@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import logo from "../../assets/logo-elcarmen.jpg";
+import logo from "../../assets/logo-elcarmen.png";
+import { buildWhatsAppLink } from "../../utils/whatsapp";
 import "./navbar.css";
 
 const navItems = [
@@ -14,7 +15,10 @@ const navItems = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const whatsappPhone = import.meta.env.VITE_WHATSAPP_PHONE || "50246496454";
-  const whatsappHref = `https://wa.me/${whatsappPhone}`;
+  const defaultMessage =
+    import.meta.env.VITE_WHATSAPP_DEFAULT_MESSAGE ||
+    "Hola, me interesa conocer su catálogo y disponibilidad de productos.";
+  const whatsappHref = buildWhatsAppLink(whatsappPhone, defaultMessage);
 
   // Bloquear scroll cuando el menú móvil está abierto
   useEffect(() => {

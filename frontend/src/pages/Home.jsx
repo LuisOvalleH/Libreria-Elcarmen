@@ -1,7 +1,14 @@
 import AnimatedSection from "../components/ui/AnimatedSection";
 import { Link } from "react-router-dom";
+import useSeo from "../hooks/useSeo";
 
 export default function Home() {
+  useSeo({
+    title: "Inicio",
+    description:
+      "Librería y papelería con productos escolares y de oficina. Revisa el catálogo y consulta por WhatsApp.",
+  });
+
   const stats = [
     { value: "20+", label: "Años" },
     { value: "5K+", label: "Productos" },
@@ -83,6 +90,8 @@ export default function Home() {
               <img
                 src="https://granadillaempresarial.com/wp-content/uploads/job-manager-uploads/job_cover_image/2025/01/Libreria-y-Papeleria-Carmen_Fotos_3_1920x1080.jpg"
                 alt="Librería"
+                decoding="async"
+                fetchPriority="high"
                 style={{ width: "100%", height: "100%", objectFit: "cover",display: "block" }}
               />
             </div>
@@ -371,8 +380,8 @@ export default function Home() {
 
               <div style={{ display: "grid", gap: 14, marginTop: 8 }}>
                 {[
-                  { title: "Dirección", value: "Calle Principal #123\nCentro, Ciudad", icon: "📌" },
-                  { title: "Teléfono", value: "(555) 123-4567", icon: "📞" },
+                  { title: "Dirección", value: "5ta Av, 0-35 zona 3 Salcaja/Quetgo", icon: "📌" },
+                  { title: "Teléfono", value: "+502 5441 9108", icon: "📞" },
                   { title: "Email", value: "info@libreriaelcarmen.com", icon: "✉️" },
                 ].map((it) => (
                   <div

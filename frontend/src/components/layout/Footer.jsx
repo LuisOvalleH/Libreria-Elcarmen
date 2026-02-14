@@ -1,9 +1,21 @@
+import "./footer.css";
+
 export default function Footer() {
   return (
-    <footer style={{ padding: 40, background: "#0f172a", color: "#fff" }}>
-      <strong>Librería El Carmen</strong>
-      <p>Tu aliado en conocimiento</p>
-      <small>© 2026 Librería El Carmen</small>
+    <footer className="site-footer">
+      <div className="site-footer__inner">
+        <div>
+          <h3 className="site-footer__brand">Librería El Carmen</h3>
+          <p className="site-footer__text">Tu aliado en conocimiento</p>
+          <small className="site-footer__copy">© 2026 Librería El Carmen</small>
+        </div>
+
+        <div className="site-footer__links">
+          <a href="/catalogo">Catálogo</a>
+          <a href="/servicios">Servicios</a>
+          <a href="/contacto">Contacto</a>
+        </div>
+      </div>
     </footer>
   );
 }
